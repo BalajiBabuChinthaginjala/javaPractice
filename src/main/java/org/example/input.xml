@@ -1,0 +1,47 @@
+
+<questions>
+    <question id="1">
+        <answers sub="physics">
+            <answername>java is a programming language</answername>
+            <id>101</id>
+            <postedby>ravi</postedby>
+        </answers>
+        <answers sub="telugu">
+            <answername>java is a platform</answername>
+            <id>102</id>
+            <postedby>john</postedby>
+        </answers>
+        <questionname>What is java?</questionname>
+    </question>
+
+    <question id="2">
+        <answers sub="physics">
+            <answername>java is a programming language</answername>
+            <id>101</id>
+            <postedby>ravi</postedby>
+        </answers>
+        <answers sub="telugu">
+            <answername>java is a platform</answername>
+            <id>102</id>
+            <postedby>john</postedby>
+        </answers>
+        <questionname>What is java?</questionname>
+    </question>
+
+    <question id="3">
+        <answers sub="physics">
+            <answername>java is a programming language</answername>
+            <id>101</id>
+            <postedby>ravi</postedby>
+        </answers>
+        <answers sub="telugu">
+            <answername>java is a platform</answername>
+            <id>102</id>
+            <postedby>john</postedby>
+        </answers>
+        <questionname>What is java?</questionname>
+    </question>
+</questions>
+
+
+
