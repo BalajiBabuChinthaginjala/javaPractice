@@ -23,6 +23,14 @@ public class Student {
     public Student() {
     }
 
+    public Student(String name, int id, int maths, int telugu, int physics) {
+        this.name = name;
+        this.id = id;
+        this.maths = maths;
+        this.telugu = telugu;
+        this.physics = physics;
+    }
+
     public String getName() {
         return name;
     }
@@ -81,4 +89,17 @@ public class Student {
          }
          return 0;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", maths=" + maths +
+                ", telugu=" + telugu +
+                ", physics=" + physics +
+                ", average=" + average +
+                '}';
+    }
+
 }

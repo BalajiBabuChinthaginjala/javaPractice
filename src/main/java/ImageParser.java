@@ -16,9 +16,10 @@ import java.nio.file.Paths;
 
 public class ImageParser {
     public static void main(String[] args) throws TesseractException, IOException, TikaException, SAXException {
-        String path="D:\\KSM_DATA\\KSM_content\\content4\\funny-quotes-mitch-hedberg.jpg";
+        String path="D:\\KSM_DATA\\KSM_content\\content4\\rodINC000000059758.html";
         Path filepath = Paths.get(path);
         String mimetype = Files.probeContentType(filepath);
+        System.out.println(mimetype);
         if (mimetype != null && mimetype.split("/")[0].equals("image")) {
           System.out.println( crakImage(path));
         }else {
