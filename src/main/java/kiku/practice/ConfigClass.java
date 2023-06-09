@@ -12,11 +12,15 @@ public class ConfigClass {
 
 
     @XmlAttribute(name = "numOfFirstWords")
-    String numberOfFirstWords;
+    int numberOfFirstWords;
     @XmlAttribute(name = "numOfLastWords")
-    String numberOfLastWords;
+    int numberOfLastWords;
     @XmlAttribute(name = "type")
     String type;
+
+
+    @XmlAttribute(name = "path")
+    String fileName;
 
     @XmlElement(name = "Summarize")
     SummarizeClass summarize;
@@ -25,11 +29,19 @@ public class ConfigClass {
     public ConfigClass() {
     }
 
-    public ConfigClass(String wordDirection, String numberOfWords, String numberOfLastWords, String firstLetterOnly, String incrementalPositions, SummarizeClass summarize) {
+    public ConfigClass(String wordDirection, int numberOfWords, int numberOfLastWords, int firstLetterOnly, int incrementalPositions, SummarizeClass summarize) {
         this.wordDirection = wordDirection;
         this.numberOfFirstWords = numberOfWords;
         this.numberOfLastWords = numberOfLastWords;
         this.summarize = summarize;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getWordDirection() {
@@ -40,19 +52,19 @@ public class ConfigClass {
         this.wordDirection = wordDirection;
     }
 
-    public String getNumberOfFirstWords() {
+    public int getNumberOfFirstWords() {
         return numberOfFirstWords;
     }
 
-    public void setNumberOfFirstWords(String numberOfFirstWords) {
+    public void setNumberOfFirstWords(int numberOfFirstWords) {
         this.numberOfFirstWords = numberOfFirstWords;
     }
 
-    public String getNumberOfLastWords() {
+    public int getNumberOfLastWords() {
         return numberOfLastWords;
     }
 
-    public void setNumberOfLastWords(String numberOfLastWords) {
+    public void setNumberOfLastWords(int numberOfLastWords) {
         this.numberOfLastWords = numberOfLastWords;
     }
 

@@ -10,23 +10,23 @@ public class SummarizeClass {
     @XmlAttribute
     String summarize;
     @XmlElement(name = "FirstLetterOnly")
-    String FirstLetterOnly;
+    boolean FirstLetterOnly;
     @XmlElement(name = "IncrementalPositions")
-    String IncrementalPositions;
+    int IncrementalPositions;
 
-    public String getFirstLetterOnly() {
+    public boolean getFirstLetterOnly() {
         return FirstLetterOnly;
     }
 
-    public void setFirstLetterOnly(String firstLetterOnly) {
+    public void setFirstLetterOnly(boolean firstLetterOnly) {
         FirstLetterOnly = firstLetterOnly;
     }
 
-    public String getIncrementalPositions() {
+    public int getIncrementalPositions() {
         return IncrementalPositions;
     }
 
-    public void setIncrementalPositions(String incrementalPositions) {
+    public void setIncrementalPositions(int incrementalPositions) {
         IncrementalPositions = incrementalPositions;
     }
 

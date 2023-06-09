@@ -26,7 +26,7 @@ public class ReadingData {
         BodyContentHandler handler = new BodyContentHandler();
         AutoDetectParser autoDetectParser = new AutoDetectParser();
         autoDetectParser.parse(fStream, handler, metadata, parseContext);
-        return handler.toString();
+        return handler.toString().trim();
     }
 
 }
