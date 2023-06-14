@@ -38,7 +38,7 @@ public class WordDirection {
             javaToJson.setType(customConfigClass1.getConfig().getType());
             javaToJson.setPath(fileName);
             if (Objects.equals("yes", customConfigClass1.getConfig().getSummarize().getSummarize())) {
-                if ( customConfigClass1.getConfig().getSummarize().getFirstLetterOnly()) {
+                if (customConfigClass1.getConfig().getSummarize().getFirstLetterOnly()) {
                     javaToJson.setFirstLetterOnly("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
                 }
                 javaToJson.setIncrementalPositions("Incremental Position --->" + incrementalPositions(requiredData, customConfigClass1.getConfig().getSummarize().getIncrementalPositions()) + "\n");
@@ -81,7 +81,7 @@ public class WordDirection {
             finalData.add("Number of First Words --->" + numberOfFirstWords(numOfFirstWords, requiredData) + "\n");
             finalData.add("Number of Last Words --->" + numberOfLastWords(numOfLastWords, requiredData) + "\n");
             if (Objects.equals("yes", summarize)) {
-                if (Objects.equals("true", firstLetterOnly)) {
+                if (firstLetterOnly) {
                     finalData.add("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
                 }
                 finalData.add("Incremental Position --->" + incrementalPositions(requiredData, incrementalPositions) + "\n");
@@ -91,7 +91,7 @@ public class WordDirection {
             finalData.add("Number of First Words --->" + numberOfFirstWords(numOfFirstWords, requiredData) + "\n");
             finalData.add("Number of Last Words --->" + numberOfLastWords(numOfLastWords, requiredData) + "\n");
             if (Objects.equals("yes", summarize)) {
-                if (Objects.equals("true", firstLetterOnly)) {
+                if (firstLetterOnly) {
                     finalData.add("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
                 }
                 finalData.add("Incremental Position --->" + incrementalPositions(requiredData, incrementalPositions) + "\n");

@@ -47,8 +47,8 @@ public class Example1 {
         System.out.println("-----------------------");
         studentList.stream().sorted(Comparator.comparingInt(Student::getPhysics)).forEach(student -> System.out.println(student));
         System.out.println("----------------------");
-        Set<Student> hashSet = studentList.stream().collect(Collectors.toSet());
-        hashSet.forEach(student -> System.out.println(student));
+        Set<Student> studentset = studentList.stream().collect(Collectors.toSet());
+        studentset.forEach(student -> System.out.println(student));
         studentList.stream().forEach(student -> System.out.println(student));
 
         System.out.println(names.stream().count());
@@ -56,6 +56,7 @@ public class Example1 {
         List<String> namesReversOrder = names.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
         namesReversOrder.stream().forEach(name -> System.out.println(name));
         names.stream().forEach(name -> System.out.println(name));
+
     }
 
 }

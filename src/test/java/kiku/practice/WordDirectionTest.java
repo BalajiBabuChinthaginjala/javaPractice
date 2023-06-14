@@ -62,5 +62,11 @@ public class WordDirectionTest {
         String data = sut.incrementalPositions("Prashant Murahari Murahari Chintu Chinnu", 5);
         assertEquals("P u r n n", data);
     }
+    public void convertingToJsonTest(){
+        JavaToJson javaToJson = new JavaToJson();
+        String direction = javaToJson.getWordDirection();
+        System.out.println();
+
+    }
 
 }
