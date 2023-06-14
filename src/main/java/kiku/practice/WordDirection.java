@@ -1,11 +1,11 @@
 package kiku.practice;
 
 import com.google.gson.Gson;
-import net.sourceforge.tess4j.Word;
 import org.apache.commons.io.IOUtils;
 import org.apache.tika.exception.TikaException;
 import org.xml.sax.SAXException;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,86 +18,88 @@ public class WordDirection {
 
     public static void main(String[] args) throws TikaException, IOException, SAXException {
         WordDirection wordDirection = new WordDirection();
-        System.out.println(wordDirection.storingData("C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\IdeaIC2023.1\\scratches\\scratch_5.xml"));
-        wordDirection.convertingToJson("C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\IdeaIC2023.1\\scratches\\scratch_5.xml");
+        String xmlFileName = "C:\\Users\\Admin\\AppData\\Roaming\\JetBrains\\IdeaIC2023.1\\scratches\\scratch_5.xml";
+        wordDirection.storingData(xmlFileName);
+        wordDirection.convertingToJson(xmlFileName);
     }
 
     public void convertingToJson(String xmlFileName) throws TikaException, IOException, SAXException {
-
         XmlToJava xmlToJava = new XmlToJava();
-        CustomConfigClass customConfigClass = new CustomConfigClass();
-        CustomConfigClass customConfigClass1 = (CustomConfigClass) xmlToJava.xmlToJava(xmlFileName, customConfigClass.getClass());
+        CustomConfigClass customConfigClass = (CustomConfigClass) xmlToJava.xmlToJava(xmlFileName, CustomConfigClass.class);
         JavaToJson javaToJson = new JavaToJson();
-        String fileName = customConfigClass1.getConfig().getFileName();
-        ReadingData readingData = new ReadingData();
-        String requiredData = readingData.readingData(fileName);
-        if (Objects.equals("forward", customConfigClass1.getConfig().getWordDirection())) {
-            javaToJson.setWordDirection("Forward Direction --->" + forwardDirection(requiredData) + "\n");
-            javaToJson.setNumOfFirstWords("Number of First Words --->" + numberOfFirstWords(customConfigClass1.getConfig().getNumberOfFirstWords(), requiredData) + "\n");
-            javaToJson.setNumOfLastWords("Number of Last Words --->" + numberOfLastWords(customConfigClass1.getConfig().getNumberOfLastWords(), requiredData) + "\n");
-            javaToJson.setType(customConfigClass1.getConfig().getType());
-            javaToJson.setPath(fileName);
-            if (Objects.equals("yes", customConfigClass1.getConfig().getSummarize().getSummarize())) {
-                if (customConfigClass1.getConfig().getSummarize().getFirstLetterOnly()) {
-                    javaToJson.setFirstLetterOnly("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
+        List<String> fileNames = getFileName(customConfigClass.getConfig().getFileName());
+        for (String htmlFileName : fileNames) {
+            ReadingData readingData = new ReadingData();
+            String requiredData = readingData.readingData(htmlFileName);
+            if (Objects.equals("forward", customConfigClass.getConfig().getWordDirection())) {
+                javaToJson.setWordDirection("Forward Direction --->" + forwardDirection(requiredData) + "\n");
+                javaToJson.setNumOfFirstWords("Number of First Words --->" + numberOfFirstWords(customConfigClass.getConfig().getNumberOfFirstWords(), requiredData) + "\n");
+                javaToJson.setNumOfLastWords("Number of Last Words --->" + numberOfLastWords(customConfigClass.getConfig().getNumberOfLastWords(), requiredData) + "\n");
+                javaToJson.setType(customConfigClass.getConfig().getType());
+                javaToJson.setPath(htmlFileName);
+                if (Objects.equals("yes", customConfigClass.getConfig().getSummarize().getSummarize())) {
+                    if (customConfigClass.getConfig().getSummarize().getFirstLetterOnly()) {
+                        javaToJson.setFirstLetterOnly("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
+                    }
+                    javaToJson.setIncrementalPositions("Incremental Position --->" + incrementalPositions(requiredData, customConfigClass.getConfig().getSummarize().getIncrementalPositions()) + "\n");
                 }
-                javaToJson.setIncrementalPositions("Incremental Position --->" + incrementalPositions(requiredData, customConfigClass1.getConfig().getSummarize().getIncrementalPositions()) + "\n");
-            }
-        } else if (Objects.equals("reverse", customConfigClass1.getConfig().getWordDirection())) {
-            javaToJson.setWordDirection("Reverse Direction --->" + reverseCharacter(requiredData) + "\n");
-            javaToJson.setNumOfFirstWords("Number of First Words --->" + numberOfFirstWords(customConfigClass1.getConfig().getNumberOfFirstWords(), requiredData) + "\n");
-            javaToJson.setNumOfLastWords("Number of Last Words --->" + numberOfLastWords(customConfigClass1.getConfig().getNumberOfLastWords(), requiredData) + "\n");
-            javaToJson.setType(customConfigClass1.getConfig().getType());
-            javaToJson.setPath(fileName);
-            if (Objects.equals("yes", customConfigClass1.getConfig().getSummarize().getSummarize())) {
-                if (Objects.equals("true", customConfigClass1.getConfig().getSummarize().getFirstLetterOnly())) {
-                    javaToJson.setFirstLetterOnly("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
+            } else if (Objects.equals("reverse", customConfigClass.getConfig().getWordDirection())) {
+                javaToJson.setWordDirection("Reverse Direction --->" + reverseCharacter(requiredData) + "\n");
+                javaToJson.setNumOfFirstWords("Number of First Words --->" + numberOfFirstWords(customConfigClass.getConfig().getNumberOfFirstWords(), requiredData) + "\n");
+                javaToJson.setNumOfLastWords("Number of Last Words --->" + numberOfLastWords(customConfigClass.getConfig().getNumberOfLastWords(), requiredData) + "\n");
+                javaToJson.setType(customConfigClass.getConfig().getType());
+                javaToJson.setPath(htmlFileName);
+                if (Objects.equals("yes", customConfigClass.getConfig().getSummarize().getSummarize())) {
+                    if (Objects.equals("true", customConfigClass.getConfig().getSummarize().getFirstLetterOnly())) {
+                        javaToJson.setFirstLetterOnly("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
+                    }
+                    javaToJson.setIncrementalPositions("Incremental Position --->" + incrementalPositions(requiredData, customConfigClass.getConfig().getSummarize().getIncrementalPositions()) + "\n");
                 }
-                javaToJson.setIncrementalPositions("Incremental Position --->" + incrementalPositions(requiredData, customConfigClass1.getConfig().getSummarize().getIncrementalPositions()) + "\n");
             }
+            String extractedData = new Gson().toJson(javaToJson);
+            IOUtils.write(extractedData, new FileOutputStream("E:\\Practice\\chintu.txt"));
         }
-        System.out.println(new Gson().toJson(javaToJson));
-
     }
 
     public String storingData(String xmlFileName) throws TikaException, IOException, SAXException {
         List<String> finalData = new ArrayList<>();
         XmlToJava xmlToJava = new XmlToJava();
-        CustomConfigClass customConfigClass = new CustomConfigClass();
-        CustomConfigClass customConfigClass1 = (CustomConfigClass) xmlToJava.xmlToJava(xmlFileName, customConfigClass.getClass());
-        String wordDirect = customConfigClass1.getConfig().getWordDirection();
-        int numOfFirstWords = customConfigClass1.getConfig().getNumberOfFirstWords();
-        int numOfLastWords = customConfigClass1.getConfig().getNumberOfLastWords();
-        String fileName = customConfigClass1.getConfig().getFileName();
-        String summarize = customConfigClass1.getConfig().getSummarize().getSummarize();
-        boolean firstLetterOnly = customConfigClass1.getConfig().getSummarize().getFirstLetterOnly();
-        int incrementalPositions = customConfigClass1.getConfig().getSummarize().getIncrementalPositions();
-        String type = customConfigClass1.getConfig().getType();
-        ReadingData readingData = new ReadingData();
-        String requiredData = readingData.readingData(fileName);
-
-        if (Objects.equals("forward", wordDirect)) {
-            finalData.add("Forward Direction --->" + forwardDirection(requiredData) + "\n");
-            finalData.add("Number of First Words --->" + numberOfFirstWords(numOfFirstWords, requiredData) + "\n");
-            finalData.add("Number of Last Words --->" + numberOfLastWords(numOfLastWords, requiredData) + "\n");
-            if (Objects.equals("yes", summarize)) {
-                if (firstLetterOnly) {
-                    finalData.add("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
+        CustomConfigClass customConfigClass = (CustomConfigClass) xmlToJava.xmlToJava(xmlFileName, CustomConfigClass.class);
+        String wordDirect = customConfigClass.getConfig().getWordDirection();
+        int numOfFirstWords = customConfigClass.getConfig().getNumberOfFirstWords();
+        int numOfLastWords = customConfigClass.getConfig().getNumberOfLastWords();
+        String summarize = customConfigClass.getConfig().getSummarize().getSummarize();
+        boolean firstLetterOnly = customConfigClass.getConfig().getSummarize().getFirstLetterOnly();
+        int incrementalPositions = customConfigClass.getConfig().getSummarize().getIncrementalPositions();
+        String type = customConfigClass.getConfig().getType();
+        List<String> fileNames = getFileName(customConfigClass.getConfig().getFileName());
+        for (String fileName : fileNames) {
+            ReadingData readingData = new ReadingData();
+            String requiredData = readingData.readingData(fileName);
+            if (Objects.equals("forward", wordDirect)) {
+                finalData.add("Forward Direction --->" + forwardDirection(requiredData) + "\n");
+                finalData.add("Number of First Words --->" + numberOfFirstWords(numOfFirstWords, requiredData) + "\n");
+                finalData.add("Number of Last Words --->" + numberOfLastWords(numOfLastWords, requiredData) + "\n");
+                if (Objects.equals("yes", summarize)) {
+                    if (firstLetterOnly) {
+                        finalData.add("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
+                    }
+                    finalData.add("Incremental Position --->" + incrementalPositions(requiredData, incrementalPositions) + "\n");
                 }
-                finalData.add("Incremental Position --->" + incrementalPositions(requiredData, incrementalPositions) + "\n");
-            }
-        } else if (Objects.equals("reverse", wordDirect) && (Objects.equals("char", type))) {
-            finalData.add("Only Characters were reversed --->" + reverseCharacter(requiredData) + "\n");
-            finalData.add("Number of First Words --->" + numberOfFirstWords(numOfFirstWords, requiredData) + "\n");
-            finalData.add("Number of Last Words --->" + numberOfLastWords(numOfLastWords, requiredData) + "\n");
-            if (Objects.equals("yes", summarize)) {
-                if (firstLetterOnly) {
-                    finalData.add("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
+            } else if (Objects.equals("reverse", wordDirect) && (Objects.equals("char", type))) {
+                finalData.add("Only Characters were reversed --->" + reverseCharacter(requiredData) + "\n");
+                finalData.add("Number of First Words --->" + numberOfFirstWords(numOfFirstWords, requiredData) + "\n");
+                finalData.add("Number of Last Words --->" + numberOfLastWords(numOfLastWords, requiredData) + "\n");
+                if (Objects.equals("yes", summarize)) {
+                    if (firstLetterOnly) {
+                        finalData.add("First Letter of each word --->" + firstLetterOfEachWord(requiredData) + "\n");
+                    }
+                    finalData.add("Incremental Position --->" + incrementalPositions(requiredData, incrementalPositions) + "\n");
                 }
-                finalData.add("Incremental Position --->" + incrementalPositions(requiredData, incrementalPositions) + "\n");
             }
+            IOUtils.write(finalData.toString(), new FileOutputStream("E:\\Practice\\prashant.txt"));
         }
-        IOUtils.write(finalData.toString(), new FileOutputStream("E:\\Practice\\prashant.txt"));
+
         return finalData.toString();
 
     }
@@ -217,5 +219,15 @@ public class WordDirection {
             }
         }
         return output.trim();
+    }
+
+    public List<String> getFileName(String filePath) {
+        File directoryPath = new File(filePath);
+        File filesList[] = directoryPath.listFiles();
+        List<String> fileNames = new ArrayList<>();
+        for (File file : filesList) {
+            fileNames.add(file.getAbsolutePath());
+        }
+        return fileNames;
     }
 }
